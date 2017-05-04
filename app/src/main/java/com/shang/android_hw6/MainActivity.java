@@ -95,7 +95,12 @@ public class MainActivity extends AppCompatActivity {
     AdapterView.OnItemLongClickListener longClickListener=new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            return false;
+            db=dBopneHelper.getWritableDatabase();
+            db.delete(DATABASE_TABLE,"title='"+titleList.get(position)+"'",null);
+            titleList.remove(position);
+            listView.setAdapter(new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_list_item_1,titleList));
+            db.close();
+            return true;
         }
     };
 
